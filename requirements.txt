@@ -1,2 +1,4 @@
 PyPDF2
 pypdf
+langchain
+chromadb
