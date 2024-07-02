@@ -4,3 +4,4 @@ langchain
 chromadb
 pinecone
 langchain-community
+openai
