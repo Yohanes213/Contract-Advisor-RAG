@@ -2,3 +2,5 @@ PyPDF2
 pypdf
 langchain
 chromadb
+pinecone
+langchain-community
