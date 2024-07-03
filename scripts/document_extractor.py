@@ -1,7 +1,17 @@
 from pypdf import PdfReader
-from logger import logger  # Import logger from logger.py
+from logger import logger
 
 def extract_text_from_pdf(pdf_path):
+    """
+    Extract text from a PDF file located at `pdf_path`.
+
+    Args:
+    - pdf_path (str): Path to the PDF file.
+
+    Returns:
+    - list: List of text extracted from the PDF pages.
+           Returns an empty list if there is any error during extraction.
+    """
     try:
         reader = PdfReader(pdf_path)
         pdf_texts = [p.extract_text().strip() for p in reader.pages if p.extract_text()]
