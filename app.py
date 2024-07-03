@@ -2,7 +2,9 @@ import streamlit as st
 import asyncio
 
 from scripts.response_generation import generate_response
-#from scripts.query_utils import querying, embed_text
+
+# from scripts.query_utils import querying, embed_text
+
 
 async def main():
     st.title("QA Contract")
@@ -12,13 +14,13 @@ async def main():
         st.session_state.chat_history = []
 
     with st.sidebar:
-        user_query = st.text_input('Enter your question:')
+        user_query = st.text_input("Enter your question:")
 
     if st.sidebar.button("See Result") and user_query:
-        #embedded_text = await embed_text(user_query)
-        #result = await querying(embedded_text)
+        # embedded_text = await embed_text(user_query)
+        # result = await querying(embedded_text)
 
-        #retrieved_docs = [match['metadata']['text'] for match in result['matches']]
+        # retrieved_docs = [match['metadata']['text'] for match in result['matches']]
 
         # prompt = f"User question: {user_query}\n\n"
         # for i, doc in enumerate(retrieved_docs, 1):
@@ -36,6 +38,7 @@ async def main():
     for chat in st.session_state.chat_history:
         st.write(f"**User:** {chat['user']}")
         st.write(f"**AI:** {chat['ai']}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
