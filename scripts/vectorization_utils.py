@@ -87,7 +87,7 @@ def vectorize(chunked_text, document, namespace):
 
 
 if __name__ == "__main__":
-    result = extract_text_from_pdf('scripts/Robinson Advisory.docx.pdf')
+    result = extract_text_from_pdf('data/Robinson Advisory.docx.pdf')
     text = '\n\n'.join(result).replace("\n", ' ')
     chunked_text = chunk_text(text)
     embeded_text = embed_text(chunked_text)
