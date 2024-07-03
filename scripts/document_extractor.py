@@ -14,7 +14,7 @@ def extract_text_from_pdf(pdf_path):
     """
     try:
         reader = PdfReader(pdf_path)
-        pdf_texts = [p.extract_text().strip() for p in reader.pages if p.extract_text()]
+        pdf_texts = [p.extract_text() for p in reader.pages if p.extract_text()]
         logger.info(f"Extracting text from PDF '{pdf_path}' successfully completed")
         return pdf_texts
     except Exception as e:
@@ -25,4 +25,4 @@ def extract_text_from_pdf(pdf_path):
 
 if __name__ == "__main__":
     result = extract_text_from_pdf('data/Robinson Advisory.docx.pdf')
-    print(result[0])
+    print(result)
