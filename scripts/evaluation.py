@@ -1,4 +1,4 @@
-#from ragas.dataset import Dataset
+# from ragas.dataset import Dataset
 from ragas.metrics import Faithfulness, AnswerRelevancy
 from response_generation import generate_response
 import docx
@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 from datasets import Dataset
 
 load_dotenv()
-openai_key = os.getenv('OPENAI_API_KEYS')
-pinecone_key = os.getenv('PINECONE_API_KEYS')
+openai_key = os.getenv("OPENAI_API_KEYS")
+pinecone_key = os.getenv("PINECONE_API_KEYS")
 
 
 def load_evaluation_dataset(docx_path):
@@ -23,38 +23,47 @@ def load_evaluation_dataset(docx_path):
 
     for para in doc.paragraphs:
         text = para.text.strip()
-        if text.startswith('Q'):
+        if text.startswith("Q"):
             questions.append(text)
-        elif text.startswith('A'):
+        elif text.startswith("A"):
             answers.append(text)
 
     return questions, answers
+
 
 async def runner(questions):
     result = await generate_response(questions)
     return result
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     from pinecone import Pinecone as PineconeClient
     from langchain_pinecone import PineconeVectorStore
-    pc = PineconeClient(pinecone_key)
-    index_name = 'lawquestionandanswer'
-    #index = pc.Index(index_name)
 
-    embed_model = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=openai_key)
+    pc = PineconeClient(pinecone_key)
+    index_name = "lawquestionandanswer"
+    # index = pc.Index(index_name)
+
+    embed_model = OpenAIEmbeddings(
+        model="text-embedding-ada-002", openai_api_key=openai_key
+    )
     # embedded_text = await embed_text(query)
     # result = await querying(embedded_text)
     # retrieved_docs = [match['metadata']['text'] for match in result['matches']]
     # #retrieved_docs = result['matches']
 
-    vectordb = PineconeVectorStore(embedding=embed_model, pinecone_api_key=pinecone_key, index_name=index_name, namespace='Robinson')
-
-    retriver = vectordb.as_retriever(
-        search_type="mmr",
-        search_kwargs={'k': 2, 'lambda_mult': 0.25}
+    vectordb = PineconeVectorStore(
+        embedding=embed_model,
+        pinecone_api_key=pinecone_key,
+        index_name=index_name,
+        namespace="Robinson",
     )
 
-    questions, ground_truth = load_evaluation_dataset('data/Robinson Q&A.docx')
+    retriver = vectordb.as_retriever(
+        search_type="mmr", search_kwargs={"k": 2, "lambda_mult": 0.25}
+    )
+
+    questions, ground_truth = load_evaluation_dataset("data/Robinson Q&A.docx")
     answers = []
     contexts = []
 
@@ -63,13 +72,15 @@ if __name__ == '__main__':
     for question in questions:
         result = loop.run_until_complete(runner(question))
         answers.append(result)
-        contexts.append([docs.page_content for docs in retriver.get_relevant_documents(question)])
-    
+        contexts.append(
+            [docs.page_content for docs in retriver.get_relevant_documents(question)]
+        )
+
     data = {
-    "question": questions,
-    "answer": answers,
-    "contexts": contexts,
-    "ground_truth": ground_truth
+        "question": questions,
+        "answer": answers,
+        "contexts": contexts,
+        "ground_truth": ground_truth,
     }
 
     dataset = Dataset.from_dict(data)
@@ -79,18 +90,17 @@ if __name__ == '__main__':
         faithfulness,
         answer_relevancy,
         context_recall,
-        context_precision
+        context_precision,
     )
 
     result = evaluate(
-        dataset = dataset,
+        dataset=dataset,
         metrics=[
             context_precision,
             context_recall,
-            #faithfulness,
-            #answer_relevancy,
+            # faithfulness,
+            # answer_relevancy,
         ],
-        
     )
 
     print(result)

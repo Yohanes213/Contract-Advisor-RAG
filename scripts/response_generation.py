@@ -17,13 +17,14 @@ load_dotenv()
 
 LANGCHAIN_TRACING_V2 = "true"
 LANGCHAIN_ENDPOINT = "https://api.smith.langchain.com"
-LANGCHAIN_API_KEY = os.getenv('LANGCHAIN_API_KEY')
+LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
 LANGCHAIN_PROJECT = "Contract Question and Answer"
 load_dotenv()
-openai_key = os.getenv('OPENAI_API_KEYS')
-pinecone_key = os.getenv('PINECONE_API_KEYS')
+openai_key = os.getenv("OPENAI_API_KEYS")
+pinecone_key = os.getenv("PINECONE_API_KEYS")
 
-openai_client = ChatOpenAI(api_key=os.getenv('OPENAI_API_KEYS'), temperature=0)
+openai_client = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEYS"), temperature=0)
+
 
 def retrive():
     """
@@ -33,17 +34,24 @@ def retrive():
         Pinecone retriever object configured for contract question and answer retrieval.
     """
     pc = PineconeClient(pinecone_key)
-    index_name = 'lawquestionandanswer'
-    embed_model = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=openai_key)
+    index_name = "lawquestionandanswer"
+    embed_model = OpenAIEmbeddings(
+        model="text-embedding-ada-002", openai_api_key=openai_key
+    )
 
-    vectordb = PineconeVectorStore(embedding=embed_model, pinecone_api_key=pinecone_key, index_name=index_name, namespace='Robinson')
+    vectordb = PineconeVectorStore(
+        embedding=embed_model,
+        pinecone_api_key=pinecone_key,
+        index_name=index_name,
+        namespace="Robinson",
+    )
 
     retriver = vectordb.as_retriever(
-        search_type="mmr",
-        search_kwargs={'k': 2, 'lambda_mult': 0.25}
+        search_type="mmr", search_kwargs={"k": 2, "lambda_mult": 0.25}
     )
 
     return retriver
+
 
 async def generate_response(query):
     """
@@ -60,7 +68,7 @@ async def generate_response(query):
     prompt = hub.pull("rlm/rag-prompt")
 
     chain = (
-        {"context": retriver, "question": RunnablePassthrough()} 
+        {"context": retriver, "question": RunnablePassthrough()}
         | prompt
         | openai_client
         | StrOutputParser()
@@ -68,6 +76,7 @@ async def generate_response(query):
 
     response = chain.invoke(query)
     return response
+
 
 if __name__ == "__main__":
     query = "Who are the parties to the Agreement and what are the their defined names?"

@@ -8,8 +8,9 @@ from scripts.document_extractor import extract_text_from_pdf
 from logger import logger
 
 load_dotenv()
-openapi_key = os.getenv('OPENAI_API_KEYS')
-pinecone_key = os.getenv('PINECONE_API_KEYS')
+openapi_key = os.getenv("OPENAI_API_KEYS")
+pinecone_key = os.getenv("PINECONE_API_KEYS")
+
 
 def chunk_text(text, max_tokens=300):
     """
@@ -26,7 +27,7 @@ def chunk_text(text, max_tokens=300):
     current_chunk = ""
     tokens_count = 0
     sentences = text.split(". ")
-    
+
     for sentence in sentences:
         if tokens_count + len(sentence.split()) > max_tokens:
             chunks.append(current_chunk.strip())
@@ -34,13 +35,14 @@ def chunk_text(text, max_tokens=300):
             tokens_count = 0
         current_chunk += sentence + ". "
         tokens_count += len(sentence.split())
-        
+
     if current_chunk:
         chunks.append(current_chunk.strip())
-        
+
     return chunks
 
-def embed_text(chunked_text, model='text-embedding-ada-002'):
+
+def embed_text(chunked_text, model="text-embedding-ada-002"):
     """
     Embed chunked text segments using OpenAI's text embedding model.
 
@@ -59,6 +61,7 @@ def embed_text(chunked_text, model='text-embedding-ada-002'):
         logger.error(f"Error embedding text: {str(e)}")
         return []
 
+
 def vectorize(chunked_text, document, namespace):
     """
     Vectorize embedded text chunks and upsert into a Pinecone index.
@@ -73,27 +76,23 @@ def vectorize(chunked_text, document, namespace):
     """
     try:
         upsert_data = [
-            (str(i), embedding, {'text': chunked_text[i]})
+            (str(i), embedding, {"text": chunked_text[i]})
             for i, embedding in enumerate(document)
         ]
-        
+
         pc = PineconeClient(pinecone_key)
-        index_name = 'lawquestionandanswer'
+        index_name = "lawquestionandanswer"
         index = pc.Index(index_name)
-        
+
         index.upsert(upsert_data, namespace=namespace)
     except Exception as e:
         logger.error(f"Error vectorizing text: {str(e)}")
 
 
 if __name__ == "__main__":
-    result = extract_text_from_pdf('data/Robinson Advisory.docx.pdf')
-    text = '\n\n'.join(result).replace("\n", ' ')
+    result = extract_text_from_pdf("data/Robinson Advisory.docx.pdf")
+    text = "\n\n".join(result).replace("\n", " ")
     chunked_text = chunk_text(text)
     embeded_text = embed_text(chunked_text)
 
-    vectorize(chunked_text, embeded_text, 'Robinson')
-
-
-
-
+    vectorize(chunked_text, embeded_text, "Robinson")
