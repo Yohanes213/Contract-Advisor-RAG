@@ -7,3 +7,4 @@ langchain-community
 openai
 tiktoken
 langsmith
+streamlit
