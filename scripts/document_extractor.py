@@ -24,5 +24,5 @@ def extract_text_from_pdf(pdf_path):
 
 
 if __name__ == "__main__":
-    result = extract_text_from_pdf('scripts/Robinson Advisory.docx.pdf')
+    result = extract_text_from_pdf('data/Robinson Advisory.docx.pdf')
     print(result[0])
