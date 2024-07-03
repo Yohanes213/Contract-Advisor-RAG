@@ -8,3 +8,7 @@ openai
 tiktoken
 langsmith
 streamlit
+langchain-openai
+langchain-pinecone
+ragas
+docx
