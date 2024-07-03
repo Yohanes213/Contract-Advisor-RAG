@@ -1,30 +1,16 @@
-import PyPDF2
 from pypdf import PdfReader
-
-# def extract_text_from_pdf(pdf_path):
-#     text=""
-#     with open(pdf_path, "rb") as file:
-#         reader = PyPDF2.PdfReader(file)
-
-#         num_pages = len(reader.pages)
-#         for page_num in range(num_pages):
-#             page = reader.pages[page_num]
-#             text+= page.extract_text()
-
-        
-#     return text
+from logger import logger  # Import logger from logger.py
 
 def extract_text_from_pdf(pdf_path):
-    reader = PdfReader(pdf_path)
+    try:
+        reader = PdfReader(pdf_path)
+        pdf_texts = [p.extract_text().strip() for p in reader.pages if p.extract_text()]
+        logger.info(f"Extracting text from PDF '{pdf_path}' successfully completed")
+        return pdf_texts
+    except Exception as e:
+        logger.error(f"Error extracting text from PDF '{pdf_path}': {str(e)}")
+        return []
 
-    pdf_texts = [p.extract_text().strip() for p in reader.pages]
-
-    pdf_texts = [text for text in pdf_texts if text]
-
-    return pdf_texts
-
-        
-    #return text
 
 
 if __name__ == "__main__":
