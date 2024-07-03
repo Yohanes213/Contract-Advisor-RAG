@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 # Create a file handler for logging
-file_handler = logging.FileHandler('lig.log')
+file_handler = logging.FileHandler('log.log')
 file_handler.setLevel(logging.DEBUG)
 
 # Create a formatter and add it to the handler
