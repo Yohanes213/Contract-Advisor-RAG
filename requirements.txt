@@ -6,3 +6,4 @@ pinecone
 langchain-community
 openai
 tiktoken
+langsmith
