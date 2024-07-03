@@ -12,3 +12,4 @@ langchain-openai
 langchain-pinecone
 ragas
 python-docx
+black
