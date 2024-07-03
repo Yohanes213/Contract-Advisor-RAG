@@ -1,6 +1,7 @@
 from pypdf import PdfReader
 from logger import logger
 
+
 def extract_text_from_pdf(pdf_path):
     """
     Extract text from a PDF file located at `pdf_path`.
@@ -22,7 +23,6 @@ def extract_text_from_pdf(pdf_path):
         return []
 
 
-
 if __name__ == "__main__":
-    result = extract_text_from_pdf('data/Robinson Advisory.docx.pdf')
+    result = extract_text_from_pdf("data/Robinson Advisory.docx.pdf")
     print(result)
