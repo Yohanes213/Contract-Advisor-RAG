@@ -13,3 +13,4 @@ langchain-pinecone
 ragas
 python-docx
 black
+cohere
