@@ -4,7 +4,7 @@ from pinecone import Pinecone as PineconeClient
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-from scripts.document_extractor import extract_text_from_pdf
+from document_extractor import extract_text_from_pdf
 from logger import logger
 
 load_dotenv()
