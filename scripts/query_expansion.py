@@ -53,12 +53,16 @@ def expand_query_multiple(query, model="gpt-3.5-turbo"):
         temperature=0.2
     )
 
-    return response.choices[0].message.content.strip()
+    return response.choices[0].message.content#.strip()
 
 if __name__ == "__main__":
     query = "Who are the parties to the Agreement and what are their defined names?"
     query1 = "What is the termination notice?"
 
-    augmented_queries = expand_query_hypothetical(query)
-
+    augmented_queries = expand_query_multiple(query)
     print(augmented_queries)
+    list_queries = augmented_queries.strip().split('\n')
+    print(list_queries)
+    for query2 in list_queries:
+        print(query2)
+
