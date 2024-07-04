@@ -81,9 +81,13 @@ async def generate_response(query):
             The document in question is an Advisory Services Agreement. 
             Given the user query, generate a well-structured and informative response by extracting relevant information from the document. 
             Ensure the response is concise, accurate, and directly addresses the query.
+            Don't make the response long. Make the response short and precise. 
+            If you know got the answer from a specific section, specify it like Under this section and write the section number.
             question: {query} context: {context}
         """
     )
+    #            Don't start you response by 'Based on the Advisory Aggreement document provided'. Just write the answer only.
+
     
     prompt = ChatPromptTemplate(
         input_variables=['context', 'query'],
@@ -105,12 +109,14 @@ async def generate_response(query):
 
 if __name__ == "__main__":
     #query = "Who are the parties to the Agreement and what are the their defined names?"
-    query1 = "What is the termination notice?"
+    query1 = "Who are the parties to the Agreement and what are their defined names?"
 
-    hypthotetical_asnwer = expand_query_hypothetical(query1)
+    # hypthotetical_asnwer = expand_query_hypothetical(query1)
 
 
 
-    joint_query = f"{query1} {hypthotetical_asnwer}"
-    print(joint_query)
-    print(asyncio.run(generate_response(joint_query)))
+    # joint_query = f"{query1} {hypthotetical_asnwer}"
+    # print(joint_query)
+    response = asyncio.run(generate_response(query1))
+
+    print(response)
