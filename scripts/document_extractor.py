@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from logger import logger
+from scripts.logger import logger
 
 
 def extract_text_from_pdf(pdf_path):
