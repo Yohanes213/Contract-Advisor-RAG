@@ -33,11 +33,11 @@ def coherererank():
 if __name__ == "__main__":
     compressed_retriever = coherererank()
 
-    query = "Can the Agreement or any of its obligations be assigned?"
-    joint_query = expand_query_multiple(query)
+    original_query = "Can the Agreement or any of its obligations be assigned?"
+    joint_query = expand_query_multiple(original_query)
 
     list_queries = joint_query.strip().split('\n')
-    list_queries.append(query)  # Include the original query
+    list_queries.append(original_query)  # Include the original query
 
     # Retrieve documents for all expanded and original queries
     all_docs = []
@@ -59,6 +59,6 @@ if __name__ == "__main__":
         query+= "\n"
 
     
-response = asyncio.run(generate_response(query))
+    response = asyncio.run(generate_response(query))
 
-print(response)
+    print(response)
