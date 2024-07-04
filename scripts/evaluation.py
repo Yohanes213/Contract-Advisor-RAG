@@ -8,11 +8,11 @@ from dotenv import load_dotenv
 from datasets import Dataset
 from ragas import evaluate
 from ragas.metrics import (
-        faithfulness,
-        answer_relevancy,
-        context_recall,
-        context_precision,
-    )
+    faithfulness,
+    answer_relevancy,
+    context_recall,
+    context_precision,
+)
 
 
 load_dotenv()
@@ -83,4 +83,3 @@ if __name__ == "__main__":
     df = result.to_pandas()
 
     print(df)
-
