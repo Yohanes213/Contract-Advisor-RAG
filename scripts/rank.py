@@ -3,8 +3,8 @@ import os
 from langchain_cohere import CohereRerank
 from langchain_community.llms import Cohere
 from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
-from scripts.query_expansion import expand_query_hypothetical, expand_query_multiple
-from scripts.response_generation import generate_response
+from query_expansion import expand_query_hypothetical, expand_query_multiple
+from response_generation import generate_response
 from pinecone import Pinecone as PineconeClient
 from langchain_pinecone import PineconeVectorStore
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -55,15 +55,8 @@ if __name__ == "__main__":
 
     ranked_docs = sorted(all_docs, key=lambda doc: vars(doc)['metadata']['relevance_score'], reverse=True)  # Example ranking by score
 
-    query = ''
-    for doc in ranked_docs[:3]:
-        print(doc)
-        print("\n")  
-
-        query+=vars(doc)['page_content']
-        query+= "\n"
-
+    query =vars(ranked_docs[0])['page_content']
     
-    response = asyncio.run(generate_response(query))
+    response = asyncio.run(generate_response(original_query,query))
 
     print(response)
