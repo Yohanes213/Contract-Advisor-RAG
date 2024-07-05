@@ -89,6 +89,6 @@ if __name__ == "__main__":
 
     print(result)
 
-    visualize_result(result, 'result_html/1. rag_evaluation for RetrivalQA.html')
 
     
+
