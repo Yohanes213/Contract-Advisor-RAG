@@ -39,7 +39,7 @@ def expand_query_multiple(query, model="gpt-3.5-turbo"):
             "role": "system",
             "content": (
                 "You are a helpful expert in contract assistance. Users are asking questions about a contract document. "
-                "For the provided question, suggest up to five additional related questions to help them find the information they need. "
+                "For the provided question, suggest up to three additional related questions to help them find the information they need. "
                 "Ensure the questions are short, cover different aspects of the topic, and are directly related to the original question. They should be related to the original query."
                 "Output each question on a new line without numbering them."
             )
