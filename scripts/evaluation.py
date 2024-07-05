@@ -1,4 +1,5 @@
-from response_generation import generate_response, retrive
+from response_generation import generate_response
+from retriever import retriever
 import docx
 from langchain_openai import ChatOpenAI
 import os
@@ -12,7 +13,9 @@ from ragas.metrics import (
     answer_relevancy,
     context_recall,
     context_precision,
+    answer_similarity,
 )
+from evaluation_result import visualize_result
 
 
 load_dotenv()
@@ -20,6 +23,8 @@ openai_key = os.getenv("OPENAI_API_KEYS")
 pinecone_key = os.getenv("PINECONE_API_KEYS")
 
 os.environ["OPENAI_API_KEY"] = openai_key
+
+retriever = retriever()
 
 
 def load_evaluation_dataset(docx_path):
@@ -41,22 +46,19 @@ async def runner(questions):
     result = await generate_response(questions)
     return result
 
+questions, ground_truth = load_evaluation_dataset("data/Robinson Q&A.docx")
 
-if __name__ == "__main__":
+def evaluate_metrics():
 
-    retriver = retrive()
-
-    questions, ground_truth = load_evaluation_dataset("data/Robinson Q&A.docx")
     answers = []
     contexts = []
-
     loop = asyncio.get_event_loop()
 
     for question in questions:
         result = loop.run_until_complete(runner(question))
         answers.append(result)
         contexts.append(
-            [docs.page_content for docs in retriver.get_relevant_documents(question)]
+            [docs.page_content for docs in retriever.get_relevant_documents(question)]
         )
 
     data = {
@@ -75,11 +77,18 @@ if __name__ == "__main__":
             context_recall,
             faithfulness,
             answer_relevancy,
+            answer_similarity,
         ],
     )
 
+    return result
+
+
+if __name__ == "__main__":
+    result = evaluate()
+
     print(result)
 
-    df = result.to_pandas()
+    visualize_result(result, '../1. rag_evaluation for RetrivalQA.html')
 
-    print(df)
+    
