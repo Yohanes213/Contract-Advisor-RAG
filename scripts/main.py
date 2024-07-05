@@ -1,9 +1,9 @@
 #from scripts.query_expansion import expand_query_hypothetical, expand_query_multiple
 #from scripts.rank import coherererank
-from response_generation import generate_response
-from evaluation import evaluate_metrics
-from evaluation_result import visualize_result
-from rank import coherererank
+from scripts.response_generation.response_generation import generate_response
+from evaluation.evaluation import evaluate_metrics
+from evaluation.evaluation_result import visualize_result
+from scripts.reranking.rank import coherererank
 from query_expansion import expand_query_multiple
 
 import asyncio
