@@ -3,6 +3,8 @@
 from response_generation import generate_response
 from evaluation import evaluate_metrics
 from evaluation_result import visualize_result
+from rank import coherererank
+from query_expansion import expand_query_multiple
 
 import asyncio
 
@@ -12,6 +14,15 @@ async def run(query):
     response = await generate_response(query)
 
     return response
+
+
+def run_expand_query_multiple(original_query):
+    queries = expand_query_multiple(original_query)
+    return queries
+
+def run_cohere_rerank():
+    ranked_retrived_context = coherererank()
+    return ranked_retrived_context
 
 def run_evaluate():
 
@@ -28,7 +39,7 @@ if __name__ == "__main__":
     result = run_evaluate()
     print(result)
 
-    visualize_result(result, '../1. rag_evaluation for RetrivalQA(using RecursiveCharacterTextSplitter).html')
+    visualize_result(result, 'result_html/3. rag_evaluation for RetrivalQA(RetrievalQA.from_chain_type).html', 'Retrival Augmented Generation (RetrievalQA.from_chain_type)- Evaluation')
     #query = 'What is the termination notice?'
     #result = asyncio.run(run(query))
 
