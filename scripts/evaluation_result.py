@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 
-def visualize_result(result, name):
+def visualize_result(result, name, title):
 
     data = {
         'context_precision': result['context_precision'],
@@ -30,7 +30,7 @@ def visualize_result(result, name):
             )
         ),
         showlegend=True,
-        title='Retrieval Augmented Generation - Evaluation',
+        title=title,
         width=800
     )
 
