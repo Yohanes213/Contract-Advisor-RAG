@@ -6,6 +6,7 @@ from pathlib import Path
 import os
 from document_extractor import extract_text_from_pdf
 from logger import logger
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv()
 openapi_key = os.getenv("OPENAI_API_KEYS")
@@ -40,6 +41,12 @@ def chunk_text(text, max_tokens=300):
         chunks.append(current_chunk.strip())
 
     return chunks
+
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size = 1000,
+    chunk_overlap=100
+)
+
 
 
 def embed_text(chunked_text, model="text-embedding-ada-002"):
@@ -92,7 +99,8 @@ def vectorize(chunked_text, document, namespace):
 if __name__ == "__main__":
     result = extract_text_from_pdf("data/Robinson Advisory.docx.pdf")
     text = "\n\n".join(result).replace("\n", " ")
-    chunked_text = chunk_text(text)
+    # chunked_text = chunk_text(text)
+    chunked_text = text_splitter.create_documents([text])
     embeded_text = embed_text(chunked_text)
 
     vectorize(chunked_text, embeded_text, "Robinson")
