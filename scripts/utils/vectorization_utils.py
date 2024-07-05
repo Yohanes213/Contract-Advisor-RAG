@@ -4,8 +4,8 @@ from pinecone import Pinecone as PineconeClient
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-from document_extractor import extract_text_from_pdf
-from logger import logger
+from ..document_extraction.document_extractor import extract_text_from_pdf
+from scripts.utils.logger import logger
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv()
