@@ -85,10 +85,10 @@ def evaluate_metrics():
 
 
 if __name__ == "__main__":
-    result = evaluate()
+    result = evaluate_metrics()
 
     print(result)
 
-    visualize_result(result, '../1. rag_evaluation for RetrivalQA.html')
+    visualize_result(result, 'result_html/1. rag_evaluation for RetrivalQA.html')
 
     
