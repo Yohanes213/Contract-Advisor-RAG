@@ -15,7 +15,7 @@ from ragas.metrics import (
     context_precision,
     answer_similarity,
 )
-from evaluation_result import visualize_result
+from scripts.evaluation.evaluation_result import visualize_result
 
 
 load_dotenv()
