@@ -20,8 +20,8 @@ from langchain_core.runnables import RunnableParallel, RunnableLambda
 from langchain.memory import ConversationBufferMemory
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from retrieval.retriever import retriever
+#sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from scripts.retrieval.retriever import retriever
 
 load_dotenv()
 
