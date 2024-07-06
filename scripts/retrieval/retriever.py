@@ -1,23 +1,22 @@
 from pinecone import Pinecone as PineconeClient
 from langchain_pinecone import PineconeVectorStore
 import os
-#import openai
 from dotenv import load_dotenv
-from langchain import hub
-from langchain_openai import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
-from pinecone import Pinecone as PineconeClient
-from langchain_pinecone import PineconeVectorStore
 
 load_dotenv()
 
 openai_key = os.getenv("OPENAI_API_KEYS")
 pinecone_key = os.getenv("PINECONE_API_KEYS")
 
-chatopenai_client = ChatOpenAI(api_key=os.getenv("OPENAI_API_KEYS"), temperature=0)
 
 def retriever():
+    """
+    Initializes and returns a retriever using Pinecone and OpenAI embeddings.
 
+    Returns:
+    retriever: A configured retriever for searching through the Pinecone vector store.
+    """
     pc = PineconeClient(pinecone_key)
     index_name = "lawquestionandanswer"
     embed_model = OpenAIEmbeddings(
