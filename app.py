@@ -1,7 +1,7 @@
 import streamlit as st
 import asyncio
 
-from scripts.response_generation import generate_response
+#from scripts.response_generation import generate_response
 from scripts.main import run
 
 # from scripts.query_utils import querying, embed_text
