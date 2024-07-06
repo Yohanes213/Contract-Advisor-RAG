@@ -1,5 +1,9 @@
 from pypdf import PdfReader
-from logger import logger
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.logger import logger
 
 
 def extract_text_from_pdf(pdf_path):
