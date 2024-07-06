@@ -1,15 +1,15 @@
 from dotenv import load_dotenv
-import os
 from langchain_cohere import CohereRerank
 from langchain_community.llms import Cohere
 from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
-from query_expansion import expand_query_hypothetical, expand_query_multiple
-from response_generation import generate_response
-from pinecone import Pinecone as PineconeClient
-from langchain_pinecone import PineconeVectorStore
-from langchain.embeddings.openai import OpenAIEmbeddings
 import asyncio
-from retriever import retriever
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from retrieval.retriever import retriever
+from query_expansion import expand_query_hypothetical, expand_query_multiple
+from response_generation.response_generation import generate_response
 
 load_dotenv()
 cohere_api_key = os.getenv("COHERE_API_KEYS")
