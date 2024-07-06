@@ -1,5 +1,5 @@
-from response_generation import generate_response
-from retriever import retriever
+from scripts.response_generation.response_generation import generate_response
+from scripts.retrieval.retriever import retriever
 import docx
 from langchain_openai import ChatOpenAI
 import os
@@ -28,6 +28,15 @@ retriever = retriever()
 
 
 def load_evaluation_dataset(docx_path):
+    """
+    Loads an evaluation dataset from a DOCX file.
+
+    Parameters:
+    docx_path (str): Path to the DOCX file containing the questions and answers.
+
+    Returns:
+    tuple: Two lists, one with questions and one with corresponding answers.
+    """
     doc = docx.Document(docx_path)
     questions = []
     answers = []
@@ -43,13 +52,27 @@ def load_evaluation_dataset(docx_path):
 
 
 async def runner(questions):
+    """
+    Generates responses asynchronously for a list of questions.
+
+    Parameters:
+    questions (list): A list of questions to generate responses for.
+
+    Returns:
+    list: A list of generated responses.
+    """
     result = await generate_response(questions)
     return result
 
 questions, ground_truth = load_evaluation_dataset("data/Robinson Q&A.docx")
 
 def evaluate_metrics():
+    """
+    Evaluates performance metrics for generated responses.
 
+    Returns:
+    dict: A dictionary with the evaluation metrics.
+    """
     answers = []
     contexts = []
     loop = asyncio.get_event_loop()
@@ -88,7 +111,3 @@ if __name__ == "__main__":
     result = evaluate_metrics()
 
     print(result)
-
-
-    
-
