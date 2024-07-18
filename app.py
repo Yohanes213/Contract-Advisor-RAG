@@ -1,8 +1,9 @@
 import streamlit as st
 import asyncio
 
-#from scripts.response_generation import generate_response
+from scripts.response_generation.response_generation import generate_response
 from scripts.main import run
+from scripts.response_generation.autogen_generation import ask_worker
 
 # from scripts.query_utils import querying, embed_text
 
@@ -30,7 +31,9 @@ async def main():
         # prompt += "Based on the above documents, answer the user's question."
         # print(prompt)
 
-        response = await run(user_query)
+        response = ask_worker(user_query)
+
+        #response = await generate_response(user_query)
 
         # Add the new question and response to the chat history
         st.session_state.chat_history.append({"user": user_query, "ai": response})

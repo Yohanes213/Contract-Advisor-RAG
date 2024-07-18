@@ -15,3 +15,4 @@ python-docx
 black
 cohere
 langchain_cohere
+autogen
