@@ -41,9 +41,11 @@ export COHERE_API_KEYS=<your_cohere_api_key>
 streamlit run app.py
 ```
 
-Contributing
+## Contributing
+
 Contributions are welcome! Please create an issue or pull request for any feature requests or bug fixes.
 
-License
+## License
+
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
