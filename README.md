@@ -1,4 +1,4 @@
-# Contract-Advisor-RAG
+# Contract-Advisor-RAG: Building a High-Precision Legal Contract LLM App
 
 ## Overview
 
