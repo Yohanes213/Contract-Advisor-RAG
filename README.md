@@ -14,7 +14,7 @@ Vectorization: Stores vectorized text in Pinecone.
 Implementation: Includes different methods like Basic RAG, Custom Prompts, Query Expansion, RetrievalQA, and Autogen Implementation.
 Evaluation: Uses RAGAS metrics for evaluation and visualization.
 
-## Usage
+## Installation 
 1. Clone the repo
 
 ```bash
@@ -35,7 +35,9 @@ export LANGCHAIN_API_KEY=<your_langchain_api_key>
 export COHERE_API_KEYS=<your_cohere_api_key>
 ```
 
-3. Run the Streamlit App
+## Usage
+
+Run the Streamlit App
 
 ``` bash
 streamlit run app.py
