@@ -4,15 +4,6 @@
 
 This project aims to develop a Retrieval Augmented Generation (RAG) system for Contract Q&A, forming the basis for Lizzy AI's fully autonomous contract lawyer. The system combines the power of language models with external data retrieval to answer questions about contracts with high precision.
 
-## Repository Contents
-
-Data: Contains an Advisory Services Agreement used for model training and evaluation.
-Database: Utilizes Pinecone for storing and retrieving document embeddings.
-Chunking: Implements custom chunking and RecursiveCharacterTextSplitter from LangChain.
-Embedding: Uses OpenAI’s embedding model.
-Vectorization: Stores vectorized text in Pinecone.
-Implementation: Includes different methods like Basic RAG, Custom Prompts, Query Expansion, RetrievalQA, and Autogen Implementation.
-Evaluation: Uses RAGAS metrics for evaluation and visualization.
 
 ## Installation 
 1. Clone the repo
